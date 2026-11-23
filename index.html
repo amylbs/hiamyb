@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amy Brumet</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: Amy's existing site, quiet and precise; case studies read like the homepage continued
+   IDEA: a designer's desk of project prints you can push around, each one opens into its story
+   PICTURE: the draggable vignette collage on a dotted grid, same as hiamyb.com
+   COLOUR and TYPE: warm paper #FCFAF7, warm greys, Inter body, DM Mono labels and dates
+   LAYOUT: 608px reading column, collage band full width, case study = same column with a wide hero */
+:root{color-scheme:light;--bg:#FCFAF7;--ink:#52504E;--ink2:#6B6663;--mute:#A39E99;--line:#E8E4DF;--icon:#C4C2C0;--dot:#DEDAD5;--strong:#2E2C2A}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink2);font:16px/24px Inter,system-ui,sans-serif;letter-spacing:.01em;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block}
+.col{width:min(608px,100% - 40px);margin-inline:auto}
+.label{font:400 12px/16px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 16px}
+.mono{font-family:"DM Mono",monospace}
+.logo{width:20px;height:20px;border-radius:5px;display:inline-block;vertical-align:-4px;margin:0 6px 0 4px}
+
+/* header */
+header{padding:96px 0 0}
+.avatar{width:56px;height:56px;border-radius:12px;object-fit:cover;margin-bottom:16px;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.name{color:var(--ink);margin:0;line-height:19.2px}
+.role{color:var(--ink2);margin:0;line-height:19.2px}
+.intro{margin:40px 0 0;color:var(--ink2)}
+.intro a{color:var(--ink);white-space:nowrap}
+.intro a:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* work */
+section{margin-top:96px}
+.band{margin-top:28px;padding:28px 0;background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:12px 12px;overflow:hidden}
+.stage{position:relative;width:770px;height:530px;margin-inline:auto;transform-origin:top left}
+.egg{position:absolute;left:337px;top:217px;width:96px;height:96px;z-index:0;fill:var(--dot);pointer-events:none;overflow:visible}
+.card{position:absolute;width:300px;padding:5px;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 6px 12px rgba(0,0,0,.04);cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none;transition:box-shadow .2s;outline:none;will-change:transform}
+.card img{width:290px;height:238px;border-radius:7px;object-fit:cover;pointer-events:none}
+.card:hover,.card:focus-visible{box-shadow:0 0 0 1px rgba(0,0,0,.14),0 14px 28px rgba(0,0,0,.1)}
+.card:focus-visible{box-shadow:0 0 0 2px var(--ink),0 14px 28px rgba(0,0,0,.1)}
+.card.drag{cursor:grabbing;box-shadow:0 0 0 1px rgba(0,0,0,.14),0 22px 40px rgba(0,0,0,.14)}
+.chip{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);text-wrap:wrap;display:block;background:rgba(255,255,255,.96);color:var(--ink);font:400 12px/16px "DM Mono",monospace;letter-spacing:0;padding:6px 8px;border-radius:4px;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 4px 10px rgba(0,0,0,.08);opacity:0;transform:translateY(4px);transition:.18s;pointer-events:none}
+.card:hover .chip,.card:focus-visible .chip{opacity:1;transform:none}
+.card:hover,.card:focus-visible{z-index:999!important}
+@media (max-width:699px),(pointer:coarse){.card{touch-action:auto;cursor:pointer}}
+@media (hover:none){.chip{opacity:1;transform:none}}
+
+/* experience */
+.exp{list-style:none;margin:32px 0 0;padding:0}
+.exp li{display:grid;grid-template-columns:106px minmax(0,1fr);gap:0 30px;margin-bottom:30px;align-items:first baseline}
+.exp .d{font:400 14px/24px "DM Mono",monospace;letter-spacing:.01em;color:var(--ink);white-space:nowrap}
+.exp p{margin:0}
+.exp .t{color:var(--ink2)}
+.exp .c{color:var(--ink)}
+.exp a.co-link{display:inline;border-radius:6px}
+.exp a.co-link:hover .c{text-decoration:underline;text-underline-offset:3px}
+.exp a.co-link:hover .logo{transform:scale(1.08)}
+.exp .logo{transition:transform .15s}
+
+/* contact */
+.contact{list-style:none;margin:96px auto 0;padding:0 0 96px}
+.contact li a{display:flex;justify-content:space-between;align-items:center;padding:3.5px 0;color:var(--ink2)}
+.contact .l{display:flex;align-items:center;gap:10px}
+.contact svg{width:18px;height:18px;stroke:var(--icon);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.contact .r{display:flex;align-items:center;gap:8px}
+.contact a:hover .r span{color:var(--ink)}
+.contact a:hover svg.arrow{stroke:var(--ink2)}
+
+/* case study */
+.cs{padding:72px 0 0}
+.back{display:inline-flex;align-items:center;gap:8px;font:400 12px/16px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:12px 0;margin:-12px 0 36px}
+.back:hover{color:var(--ink)}
+.co{display:flex;align-items:center;color:var(--ink);margin:0 0 10px}
+.co .logo{margin:0 8px 0 0}
+.cs h1{font:500 28px/1.2 Inter,sans-serif;letter-spacing:-.01em;color:var(--strong);margin:0;text-wrap:balance}
+.lede{margin:16px 0 0;font-size:17px;line-height:27px}
+.hero{width:min(780px,100% - 24px);margin:44px auto 0;padding:6px;background:#fff;border-radius:14px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 10px 24px rgba(0,0,0,.05)}
+.hero img{width:100%;height:auto;aspect-ratio:1400/1157;border-radius:9px;object-fit:cover}
+.shot{position:relative;left:50%;transform:translateX(-50%);width:min(780px,100vw - 24px);margin:44px 0 0;padding:6px;background:#fff;border-radius:14px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 10px 24px rgba(0,0,0,.05)}
+.shot img{width:100%;height:auto;border-radius:9px}
+.shot figcaption{font:400 12px/18px "DM Mono",monospace;color:var(--mute);padding:10px 6px 4px}
+.clip{margin:16px 30px 4px 0;padding:6px;background:#fff;border-radius:12px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 6px 16px rgba(0,0,0,.05)}
+.clip video{display:block;width:100%;height:auto;aspect-ratio:1152/720;border-radius:8px;background:#fff}
+.clip img{display:block;width:100%;height:auto;border-radius:8px}
+.clip figcaption{font:400 12px/18px "DM Mono",monospace;color:var(--mute);padding:10px 6px 4px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:44px 0 0;padding:20px 0;border-block:1px solid var(--line)}
+.meta dt{font:400 12px/16px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.meta dd{margin:0;color:var(--ink);font-size:15px;line-height:22px}
+.cs section{margin-top:52px}
+.cs section p{margin:0 0 14px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 0 30px;margin:0 0 16px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;font:400 13px/24px "DM Mono",monospace;color:var(--mute)}
+.steps b{font-weight:500;color:var(--ink)}
+.note{font:400 12px/18px "DM Mono",monospace;color:var(--mute);margin-top:6px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,10vw,72px);margin:72px 0 0;padding-top:24px;border-top:1px solid var(--line)}
+.pager a{display:block;padding:8px 0}
+.pager span{display:block;font:400 12px/16px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.pager b{font-weight:400;color:var(--ink)}
+.pager strong{font-weight:600}
+.pager a:hover b{text-decoration:underline;text-underline-offset:3px}
+.pager .nx{text-align:right}
+.view{animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.hero img,.shot img,.clip img,.clip video{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vw,48px);background:rgba(28,26,24,.88);opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;cursor:zoom-out}
+.lb.open{opacity:1;visibility:visible}
+.lb img,.lb video{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#fff}
+.lb video{cursor:default}
+.lb [hidden]{display:none!important}
+.lb.can-zoom img{cursor:zoom-in}
+.lb.zoomed{overflow:auto;display:block}
+.lb.zoomed img{max-width:none;max-height:none;cursor:zoom-out;margin:auto}
+.lb button{position:absolute;top:14px;right:14px;width:44px;height:44px;padding:0;border:0;border-radius:22px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb button svg{width:18px;height:18px;display:block;stroke:currentColor;stroke-width:2;stroke-linecap:round;fill:none}
+.lb button:hover,.lb button:focus-visible{background:rgba(255,255,255,.26);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.view{animation:none}.card,.chip,.lb{transition:none}}
+@media (max-width:600px){
+  header{padding-top:56px}
+  section{margin-top:72px}
+  .exp li{grid-template-columns:1fr;gap:2px}
+  .meta{grid-template-columns:1fr 1fr}
+  .cs h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true"><img alt=""><video muted loop playsinline controls hidden></video><button type="button" aria-label="Close"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></div>
+
+<script>
+{
+const CS = [
+  {
+    id:'whimsical', img:'img/whimsical-hero2.webp', co:'Whimsical', logo:'img/whimsical-logo.svg',
+    title:'Designing for the infinite canvas', stepsLabel:'Example projects I led',
+    lede:'Four years shaping Whimsical’s canvas, docs and project tooling in a fast-moving, founder-led team, turning shifting priorities into highly polished, user-centered features.',
+    meta:[['Role','Staff Designer'],['Years','2022 – 2026'],['Scope','Canvas, docs, projects']],
+    problem:['Whimsical had grown from flowcharts into docs and project management. The challenge was growing profitability in a product many users did not see as vital to their day-to-day work.'],
+    steps:[
+      ['Connector polish.','Connectors hold every diagram together. We identified common user issues and explored multiple solutions to make connectors easy to use while staying powerful for advanced use cases.'],
+      ['Dedicated Inbox.','One place for mentions, comments and updates, so teams can keep up with work across every file.', {img:'img/whimsical-inbox-zero2.webp', label:'Illustrated inbox zero states: an empty inbox with the message You have 0 unread notifications, stretch your legs and calm your mind, plus five smaller variations', caption:'Bespoke illustrated empty states, embodying our “calm notifications” principle'}],
+      ['Custom Colors.','A long-debated question: should people pick colors outside of team themes? I advocated for it and shaped how custom colors work, optimizing for people who frequently said, “I just need one or two more colors sometimes.”'],
+      ['Reverse Trial.','Experimented in the funnel to grow paid plan sales and retain users long-term.'],
+      ['Dark Mode.','My final project: dark mode across canvas, docs and projects. I used AI to expand our hand-picked color ramps into ramps balanced in luminosity, so Whimsical could offer themes that were programmatic and flexible.', {video:'img/whimsical-darkmode.mp4', poster:'img/whimsical-darkmode-poster.webp', ratio:'2000/794', label:'Whimsical board switching from light to dark mode, showing the balanced color ramps', caption:'Mocking up most of the app’s surfaces was pivotal to validating the color ramps and exposing gaps in the system'}]
+    ],
+    outcome:['Users consistently praised the improvements we shipped. Revenue was a much harder problem, and many of our big bets fell short of their goals.']
+  },
+  {
+    id:'chatterbug-app', img:'img/streams.webp', co:'Chatterbug', logo:'img/chatterbug.svg',
+    gallery:[['img/streams-design2.webp','Five app screens: a Start Here checklist for new users, live streams, videos grouped by topic, and XP earned from watching, quizzes and bookmarks','Nine months in: a solid learning product with high daily active use and a 4.8-star App Store rating']],
+    title:'A new language learning product, from scratch',
+    lede:'As Head of Design, I led a 3-person team to design a mobile-first experience built around short-form video and live language learning content.',
+    meta:[['Role','Head of Design'],['Years','2021 – 2022'],['Platform','iOS and Android (React)']],
+    problem:['Most learners on our tutor platform were at beginner levels, and they retained far worse than our intermediate and advanced learners. Leadership wanted to explore new ways to engage and retain learners at lower levels.'],
+    steps:[
+      ['Framing the bet.','Worked with leadership and curriculum teams to define the app experience and framework for learning.', {img:'img/streams-journey-map.webp', label:'Streams journey map for the November freemium launch: onboarding user flow with known problems', caption:'Using low-fidelity flows to discuss the user journey and priorities, so we could ship quickly'}],
+      ['Player-coach leadership.','Set up critique, research and handoff rituals for the design team, split and delegated work where it played to each designer’s strengths, and also took on core flows myself.'],
+      ['Research alongside shipping.','Ran iterative discovery and usability tests to learn what was and wasn’t working, while shipping the no-brainer features in parallel.', {img:'img/streams-research.webp', label:'Research readout slides: priorities, discovery experience user quotes, and a leveling up and progress summary', caption:'From research: even though users found the videos and content very engaging, they wanted more ways to level up and progress'}],
+      ['A user-centered roadmap.','Partnered with product on a roadmap grounded in what we learned from learners, and worked with leadership toward key deadlines for an initial funding round.']
+    ],
+    outcome:['A language learning tool people loved, with a higher daily active rate than our main tutor product.']
+  },
+  {
+    id:'advanced-courses', img:'img/course.webp', co:'Chatterbug', logo:'img/chatterbug.svg',
+    gallery:[['img/cb-comparison.webp','My Course page before and after the redesign, from a level-based progress map to a list of chosen topics with progress']],
+    title:'Advanced language learning',
+    lede:'Taking Chatterbug beyond B2 with its first C1 and C2 courses, shaped around learner choice, and reimagining the full course journey so growing from beginner to advanced felt like one continuous path.',
+    meta:[['Role','Senior Product Designer'],['Years','2020 – 2021'],['Platform','Web, iOS, Android']],
+    problem:['Our advanced learners were our most active, yet our curriculum stopped at B2, so they eventually ran out of road. To keep them growing, we focused on the DACH region and built professional-level C1 and C2 content so learning had no ceiling.'],
+    steps:[
+      ['Principles for learning.','Worked with our internal learning experts to define principles for how people learn at C1 and C2.'],
+      ['Courses built around agency.','Explored through mockups and prototypes how learners could choose their own path and see their progress.', {img:'img/c1-mapping.webp', label:'C1 course flow and wireframes: discovering topics, browsing units and tracking progress'}],
+      ['Product and curriculum together.','Partnered closely with engineering, marketing and curriculum teams to build iteratively and release new content over time.', {img:'img/c1-mobile2.webp', label:'Five mobile screens for C-level learning: a welcome to create your course, exploring topics, a topic detail, My Course with progress, and an upcoming live lesson', caption:'Analytics showed a new rise in mobile usage, so we optimized for mobile'}]
+    ],
+    outcome:['A redesigned course experience with a seamless transition from lower to higher language levels.']
+  },
+  {
+    id:'field-tools', img:'img/flir.webp', co:'Tactile', logo:'img/tactile.svg',
+    gallery:[['img/milwaukee-both.webp','Milwaukee M12 infrared camera and M-Spector Flex inspection camera, showing their on-screen interfaces and button layouts']],
+    title:'Milwaukee Tool: interfaces for handheld inspection tools',
+    lede:'At Tactile, I designed the on-screen interfaces for two Milwaukee Tool products: the M12 102 x 77 Infrared Camera and the M12 M-Spector Flex inspection camera.',
+    meta:[['Role','UX Designer'],['Client','Milwaukee Tool'],['Platform','Handheld device screens']],
+    problem:['Tradespeople in construction, electrical, HVAC and plumbing use these tools in cramped, dark and hard-to-reach places, often mid-job. The screens are small and low resolution, so every icon and transition had to be clear enough that anyone, whatever their background or level of education, could pick up the tool and use it. The controls had to build muscle memory too, with intuitive physical keypad and button layouts that handle many jobs and leave room to extend in the future.'],
+    steps:[
+      ['Infrared Camera.','For Milwaukee’s first thermal camera, kept iconography and on-screen helpers minimal and optimized for the infrared view. Every common task can be done without digging into menus or leaving the main view.', {video:'img/milwaukee-ir.mp4', poster:'img/milwaukee-ir-poster.webp', label:'Animation of the infrared camera interface, showing its layered on-screen elements'}],
+      ['M-Spector Flex.','For an inspection camera with a detachable screen, tuned layouts and icons to the display’s resolution and made capturing, viewing and adjusting images faster.'],
+      ['Motion with a purpose.','Added transitions and motion across both tools to make navigation easier to follow and reduce user error.']
+    ],
+    outcome:['Two tools with interfaces that stay out of the way, so tradespeople can focus on the job in front of them. Built to be used for years, the design is classic and durable, made to stand the test of time alongside the hardware.']
+  },
+  {
+    id:'hestan-cue', img:'img/hestan.webp', co:'Tactile', logo:'img/tactile.svg',
+    afterSteps:['img/hestan-concepts.webp','Concept screens for the Hestan Cue cooking experience, with power, temperature and timer controls','Concept generation for the main cooking experience: exploring power, temperature and timer controls.'],
+    title:'Hestan Cue: guided cooking with a smart pan', stepsLabel:'Design principles',
+    lede:'Designing the app experience for Hestan Cue, a connected pan and induction burner that guides home cooks through recipes step by step.',
+    meta:[['Role','UX Designer'],['Years','2012 – 2016'],['Platform','iOS, hardware']],
+    problem:['Home cooks often fail on technique, not recipes: heat too high, timing off. Hestan Cue could control temperature automatically, but only if the app kept cooks in sync with the pan while their hands were busy.'],
+    steps:[
+      ['Hands-busy interaction.','Large type, video cues and minimal tapping so the screen reads from across the counter.'],
+      ['App and burner in sync.','Steps that advance with the cooking, with the burner adjusting heat as the recipe moves on.'],
+      ['Confidence through technique.','Short video moments that show what "done" looks like, so cooks learn as they go.']
+    ],
+    outcome:['A redesigned app that made Hestan Cue feel approachable for everyday cooking, not just special meals. A peek-ahead preview of the next step and a recipe progress bar keep cooks oriented, so even complex meals feel effortless, with hardware and software working as one product.']
+  }
+];
+
+const EXP = [
+  ['2026 – NOW','Cofounder & Product Designer','KiniStrength','img/kini.png','Designing and building a strength training app for women who lift, run, and train in multiple disciplines. '],
+  ['2022 — 2026','Staff Designer','Whimsical','img/whimsical-logo.svg','Designed thoughtful experiences for the "infinite" canvas, documentation, and project management tooling. '],
+  ['2021 — 2022','Head of Design','Chatterbug','img/chatterbug.svg','Led a team of designers to design a language learning product from scratch.'],
+  ['2020 — 2021','Senior Product Designer','Chatterbug','img/chatterbug.svg','Led the redesign for advanced-level courses addressing retention drop-off and increasing lessons with tutors.'],
+  ['2018 — 2019','Senior Product Designer','Babbel','img/babbel.svg','As one of the core learning experience leaders, I worked with multiple agile teams to develop and improve exercises.'],
+  ['2017 — 2018','UX Lead','98point6','img/98point6.svg',''],
+  ['2012 — 2016','UX Designer','Tactile','img/tactile.svg',''],
+  ['2012','UX Designer','Microsoft','img/microsoft.svg',''],
+  ['2012','BDes','University of Washington','img/uw.svg','First cohort of Bachelors of Design in Interaction Design']
+];
+
+const LINKS = {'KiniStrength':'https://www.getkini.app/','Whimsical':'https://whimsical.com/','Babbel':'https://www.babbel.com/'};
+
+/* collage positions, measured from hiamyb.com */
+const POS = {'whimsical':[31,0,0,5],'field-tools':[409,9,0,1],'hestan-cue':[0,263,0,2],'advanced-courses':[422,281,-2,4],'chatterbug-app':[196,140,0,3]};
+/* narrow screens: a taller, zig-zag collage so the cards stay large enough to read */
+const POS_M = {'whimsical':[8,0,0,5],'chatterbug-app':[162,196,0,3],'field-tools':[0,402,0,1],'advanced-courses':[166,606,-2,4],'hestan-cue':[8,812,0,2]};
+const LAYOUT = {d:{W:770,H:530,egg:[337,217]}, m:{W:470,H:1070,egg:[264,276]}};
+const mode = () => window.innerWidth < 700 ? 'm' : 'd';
+const P = () => mode()==='m' ? POS_M : POS;
+let homeMode = null;
+
+const ICON = {
+  mail:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>',
+  li:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5c0-2 1.2-3 2.6-3s2.4 1 2.4 3V17"/></svg>',
+  gh:'<svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
+  arrow:'<svg class="arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>'
+};
+
+const contact = `<ul class="contact col">
+  <li><a href="mailto:amybrumet@gmail.com"><span class="l">${ICON.mail}Email</span><span class="r"><span>amybrumet@gmail.com</span>${ICON.arrow}</span></a></li>
+  <li><a href="https://www.linkedin.com/in/amy-brumet" target="_blank" rel="noopener"><span class="l">${ICON.li}LinkedIn</span><span class="r"><span>amybrumet</span>${ICON.arrow}</span></a></li>
+  <li><a href="https://github.com/amylbs" target="_blank" rel="noopener"><span class="l">${ICON.gh}GitHub</span><span class="r"><span>@amylbs</span>${ICON.arrow}</span></a></li>
+</ul>`;
+
+const home = () => `
+<div class="view">
+<header class="col">
+  <img class="avatar" src="img/avatar.webp" alt="Amy Brumet">
+  <p class="name">Amy Brumet</p>
+  <p class="role">Product Design</p>
+  <p class="intro">Right now, I'm working on <a href="https://www.getkini.app/" target="_blank" rel="noopener"><img class="logo" src="img/kini.png" alt="">KiniStrength</a>, an activity tracker that helps build habits around regular exercise and training. I'm open to new opportunities as a hands-on design leader in women's health, fitness, and education.</p>
+</header>
+
+<section id="work">
+  <div class="col">
+    <p class="label">Selected work</p>
+  </div>
+  <div class="band"><div class="stage" id="stage">
+    <svg class="egg" viewBox="0 0 183 183" aria-hidden="true" focusable="false"><defs><g id="eggp"><path d="M110.976 64.256C110.976 65.0339 111.282 65.7823 111.829 66.3367C112.377 66.891 113.121 67.2059 113.899 67.212C114.676 67.2181 115.425 66.9149 115.981 66.3692C116.537 65.8235 116.854 65.08 116.868 64.3022C116.868 64.3022 116.868 64.3022 116.868 64.3022C116.958 59.1093 117.892 53.9103 119.531 48.9579C123.474 37.027 131.669 26.2561 142.691 20.8208C149.921 17.2255 159.518 16.6387 164.712 21.5872C167.845 24.0435 166.113 30.286 163.11 35.6201C160.104 41.1456 156.145 45.9786 152.038 51.8145C141.413 68.7484 141.827 88.2448 140.828 105.857L140.825 106.148C140.693 121.448 145.054 136.605 139.167 148.946C130.949 168.548 105.734 174.299 84.0115 174.182C84.0115 174.182 84.0115 174.182 84.0115 174.182C77.3822 174.199 70.8415 172.268 65.0536 168.709C60.806 166.097 56.8661 162.629 53.954 158.601C53.5226 157.988 52.8821 157.536 52.1438 157.364C51.4057 157.192 50.6348 157.311 49.9946 157.699C49.3543 158.086 48.8914 158.714 48.7015 159.448C48.5113 160.182 48.6143 160.958 48.9581 161.625C48.9581 161.625 48.9581 161.625 48.9581 161.625C51.8215 166.988 55.9365 171.457 60.8003 175.021C67.3815 179.849 75.6672 182.711 84.0115 182.67C84.0115 182.67 84.0115 182.67 84.0115 182.67C106.731 182.638 135.899 177.361 146.868 152.155C153.879 136.296 148.69 120.347 148.914 105.933L148.911 106.225C149.668 88.4376 149.661 70.0101 158.432 55.9752C161.897 50.9264 166.35 45.3481 169.637 39.1337C171.286 35.9873 172.809 32.638 173.454 28.6474C174.197 24.8082 173.169 19.3253 169.55 16.2922C160.564 8.51115 148.45 10.3518 139.632 14.7477C126.706 21.3994 117.828 33.7424 113.649 47.0681C111.918 52.6144 110.974 58.4184 110.976 64.256Z"/><path d="M29.1755 134.052C29.8877 134.003 30.5708 133.704 31.0744 133.188C31.578 132.672 31.8609 131.986 31.8609 131.273C31.8609 130.561 31.578 129.875 31.0744 129.359C30.5708 128.843 29.8877 128.544 29.1755 128.495C27.2358 128.391 25.3442 128.637 23.5167 129.148C20.8842 129.895 18.3412 131.211 16.2081 133.252C11.6378 138.093 11.5658 144.469 13.0934 149.608C15.6868 157.514 22.8884 161.377 29.4207 162.881L29.5103 162.9C29.617 162.921 29.724 162.943 29.8314 162.965C39.791 165.108 51.8643 165.548 61.826 160.152C69.4911 156.21 69.4484 146.732 66.75 141.047C66.7175 140.975 66.6846 140.902 66.6512 140.83C65.8928 139.195 65.3283 137.469 64.6748 135.405C64.4119 134.115 63.4011 133.555 62.2212 133.531C61.0378 133.51 59.7192 134.082 58.6186 135.066C57.5181 136.049 56.8018 137.296 56.6904 138.474C56.5826 139.649 57.0258 140.716 58.2791 141.122C58.2791 141.122 58.2791 141.122 58.2791 141.122C59.6517 141.326 60.7515 142.185 61.2657 143.311C61.2886 143.361 61.3113 143.411 61.3335 143.461C63.3207 147.696 62.2935 153.017 58.932 154.116C50.4731 157.837 41.1192 156.66 31.5013 154.636C31.3981 154.615 31.2949 154.594 31.1919 154.574L31.2815 154.593C26.4752 153.562 21.9863 150.717 20.6799 147.134C19.4023 143.896 19.6651 140.03 21.1987 138.057C22.2556 136.792 23.7792 135.715 25.4869 134.994C26.6666 134.495 27.9406 134.16 29.1755 134.052Z"/><path d="M31.8384 106.68C32.5803 106.647 33.2917 106.342 33.8163 105.808C34.3409 105.276 34.6356 104.562 34.6356 103.82C34.6356 103.079 34.3409 102.365 33.8163 101.832C33.2917 101.299 32.5803 100.994 31.8384 100.961C29.2994 100.903 26.8383 101.138 24.182 102.247C23.9592 102.344 23.7354 102.449 23.5121 102.563C16.9754 106.576 14.0295 113.706 15.2968 120.912C18.339 133.039 30.1592 135.134 37.3875 137.767C42.9282 139.528 48.1712 140.35 53.5231 141.084C60.3097 141.908 66.7692 142.58 74.1747 142.041C82.6033 141.313 94.1248 135.954 94.3462 124.843C93.7378 117.706 89.6038 113.592 84.1899 111.246C81.7457 110.326 78.884 110.324 76.5302 111.262C76.1486 111.414 75.8238 111.695 75.6339 112.065C75.444 112.434 75.4036 112.859 75.5229 113.251C75.6423 113.642 75.913 113.972 76.2768 114.173C76.6406 114.374 77.0668 114.426 77.4683 114.339C77.4683 114.339 77.4683 114.339 77.4683 114.339C79.2594 113.973 80.987 114.29 82.5014 115.13C85.8475 116.888 88.5598 121.787 88.222 124.439C87.5445 130.536 80.3729 133.648 73.5114 133.989C67.715 134.131 60.9598 133.373 54.6394 132.579C49.6024 131.901 44.4453 131.092 39.9565 129.759C31.9747 127.479 23.8107 124.849 22.5837 119.391C21.4144 115.473 23.5486 110.242 26.5388 108.094C26.636 108.033 26.7393 107.972 26.8474 107.914C28.136 107.209 30.062 106.78 31.8384 106.68Z"/><path d="M112.712 67.1539C113.38 67.4878 114.153 67.562 114.872 67.3447C115.59 67.1276 116.192 66.6392 116.548 65.9842C116.904 65.3292 116.986 64.5579 116.778 63.8372C116.569 63.1163 116.086 62.5075 115.443 62.1293C115.443 62.1293 115.443 62.1293 115.443 62.1293C112.904 60.635 110.367 59.0804 107.779 57.5442C101.13 53.597 93.987 49.6989 85.9054 47.7084C76.3219 45.5837 66.3798 43.5905 55.4418 47.4855C49.2776 49.624 41.2619 54.7942 37.7564 61.1022C35.7606 64.0488 34.1916 68.1022 34.739 72.3626C37.1761 84.3441 47.3433 88.0408 55.2988 90.6755C63.9171 93.0842 72.8593 94.3445 82.1712 92.9314C85.8616 92.3102 89.9013 90.7525 92.7207 87.214C95.6406 83.7421 95.9572 78.1899 93.927 74.4811C91.4742 69.4383 86.1511 66.961 81.6304 66.3458C78.2147 65.8465 74.8624 66.0652 71.6223 66.8089C70.8962 66.9808 70.2552 67.4201 69.8436 68.0476C69.432 68.6748 69.283 69.436 69.4302 70.1669C69.5773 70.8977 70.0091 71.5419 70.6314 71.9611C71.2537 72.3805 72.0148 72.5376 72.7508 72.4152C75.3553 71.9961 78.0707 72.0164 80.5366 72.5409C83.9171 73.2413 86.6222 74.9978 87.6319 77.4775C89.3588 81.3092 86.1746 84.619 81.0094 85.2079C73.5127 86.0888 65.3062 84.8176 57.7212 82.5153C50.962 80.5339 43.8329 75.932 43.4043 71.3032C43.1932 69.6764 43.743 67.8265 45.0074 65.9106C48.3902 60.3636 52.3242 57.9189 58.7137 55.2348C65.7025 52.3885 75.5178 53.313 84.254 55.0119C91.2279 56.4001 97.9653 59.5557 104.732 63.0483C107.363 64.4009 110.01 65.7996 112.712 67.1539Z"/><path d="M86.4365 86.141C85.7615 85.8352 84.9904 85.783 84.2815 86.0181C83.5727 86.253 82.9859 86.7524 82.6481 87.4108C82.3102 88.0691 82.2467 88.837 82.4692 89.5498C82.6915 90.2628 83.1836 90.8588 83.8256 91.2289C83.8256 91.2289 83.8256 91.2289 83.8256 91.2289C85.2811 92.0879 86.4228 93.2247 87.1201 94.5227C88.7424 97.4589 87.9329 101.19 85.4847 103.775C77.5129 110.52 60.9924 108.824 48.6639 105.571C41.7486 103.632 34.3396 100.487 30.9675 95.9493C29.1361 93.4176 28.1671 88.6832 28.8776 85.7978C30.2912 80.7659 33.6708 78.1456 39.054 80.021C40.7421 80.5628 42.4765 81.4246 44.15 82.4313C44.7836 82.8156 45.5429 82.9596 46.2749 82.8109C47.0067 82.6625 47.6489 82.2368 48.0631 81.6235C48.4772 81.0103 48.6321 80.2555 48.4964 79.5212C48.3608 78.7867 47.9436 78.1362 47.3504 77.692C47.3504 77.692 47.3504 77.692 47.3504 77.692C45.5316 76.3441 43.5458 75.0876 41.2899 74.1285C37.9652 72.6764 33.2852 71.887 29.1461 74.0273C25.0617 76.1559 22.7835 79.8201 21.4979 83.5873C19.8529 89.8583 20.826 95.2151 24.0318 100.631C30.0756 108.871 38.4268 111.623 46.3081 114.04C60.6442 117.133 76.8819 121.013 91.1259 108.561C94.9951 104.016 96.1568 96.4605 92.4677 91.1874C90.9308 88.8886 88.7392 87.2009 86.4365 86.141Z"/><path d="M138.238 38.9532C138.506 38.4388 138.626 37.8429 138.524 37.2619C138.423 36.681 138.114 36.1668 137.654 35.824C137.195 35.4811 136.614 35.3316 136.028 35.3999C135.442 35.468 134.905 35.7525 134.488 36.1562C134.488 36.1562 134.488 36.1562 134.488 36.1562C134.186 36.4655 133.899 36.787 133.623 37.1344C130.985 39.8644 130.202 46.7227 134.858 49.7885C134.93 49.8389 135.002 49.8882 135.074 49.9364C139.415 52.8893 145.12 50.7279 147.361 47.5043C147.642 47.1442 147.891 46.7801 148.122 46.4016C148.423 45.8773 148.567 45.2603 148.478 44.6521C148.389 44.0442 148.08 43.4993 147.609 43.1293C147.138 42.7592 146.536 42.5882 145.924 42.6458C145.312 42.7031 144.746 42.9887 144.308 43.4055C144.308 43.4055 144.308 43.4055 144.308 43.4055C144.089 43.5999 143.872 43.775 143.65 43.9386C141.674 45.4163 139.741 45.3688 138.62 44.5963C138.6 44.5832 138.581 44.5698 138.562 44.5563C137.494 43.8143 136.9 42.2878 137.884 39.765C137.988 39.4977 138.104 39.2291 138.238 38.9532Z"/><path d="M137.633 29.5076C140.619 26.7096 145.012 29.123 143.599 33.1883C143.339 33.9341 142.433 34.1434 141.759 33.7313L137.951 31.401C137.266 30.9815 137.046 30.057 137.633 29.5076Z"/><path d="M148.227 36.5971C151.944 34.8855 155.35 38.5628 152.725 41.9735C152.243 42.5992 151.317 42.5115 150.808 41.9078L147.931 38.4941C147.413 37.8797 147.497 36.9332 148.227 36.5971Z"/></g></defs><image href="img/egg-halo.png" x="-20" y="-20" width="223" height="223"/><use href="#eggp"/></svg>
+    ${CS.map(c=>{const [x,y,r,z]=P()[c.id];return `<a class="card" draggable="false" href="#${c.id}" data-id="${c.id}" style="left:${x}px;top:${y}px;transform:rotate(${r}deg);z-index:${z}" aria-label="${c.co}: ${c.title}"><img src="${c.img}" alt="${c.co}: ${c.title}" draggable="false"><span class="chip">${c.title} →</span></a>`}).join('')}
+  </div></div>
+</section>
+
+<section class="col">
+  <p class="label">Experience</p>
+  <p style="margin:0">Throughout my career, I've worked on tooling in many industries including aviation, connected devices, language learning, and professional tooling. I've lead projects and small teams while thriving best in a player-coach role.</p>
+  <ul class="exp">
+    ${EXP.map(([d,t,c,l,desc])=>{const co=`<img class="logo" src="${l}" alt=""><span class="c">${c}</span>`, u=LINKS[c];return `<li><span class="d">${d}</span><div><p class="t">${t} at ${u?`<a class="co-link" href="${u}" target="_blank" rel="noopener">${co}</a>`:co}</p>${desc?`<p>${desc}</p>`:''}</div></li>`}).join('')}
+  </ul>
+</section>
+${contact}
+</div>`;
+
+const study = c => {
+  const i = CS.indexOf(c), prev = CS[(i+CS.length-1)%CS.length], next = CS[(i+1)%CS.length];
+  return `<div class="view cs">
+  <div class="col">
+    <a class="back" href="#work">← Back to Home</a>
+    <p class="co"><img class="logo" src="${c.logo}" alt="">${c.co}</p>
+    <h1>${c.title}</h1>
+    <p class="lede">${c.lede}</p>
+  </div>
+  <div class="hero"><img src="${c.img}" alt="${c.co}: ${c.title}"></div>
+  <div class="col">
+    <dl class="meta">${c.meta.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+    <section><p class="label">Problem</p>${c.problem.map(p=>`<p>${p}</p>`).join('')}</section>
+    <section><p class="label">${c.stepsLabel||'Approach'}</p><ol class="steps">${c.steps.map(([b,t,m])=>`<li><b>${b}</b> ${t}${m?`<figure class="clip">${m.video?`<video src="${m.video}" poster="${m.poster}" aria-label="${m.label}"${m.ratio?` style="aspect-ratio:${m.ratio}"`:''} autoplay muted loop playsinline preload="metadata"></video>`:`<img src="${m.img}" alt="${m.label}" loading="lazy">`}${m.caption?`<figcaption>${m.caption}</figcaption>`:''}</figure>`:''}</li>`).join('')}</ol></section>
+    ${c.afterSteps?`<figure class="shot"><img src="${c.afterSteps[0]}" alt="${c.afterSteps[1]}" loading="lazy"><figcaption>${c.afterSteps[2]}</figcaption></figure>`:''}
+    <section><p class="label">Outcome</p>${c.outcome.map(p=>`<p>${p}</p>`).join('')}</section>
+    ${(c.gallery||[]).map(([src,alt,cap])=>`<figure class="shot"><img src="${src}" alt="${alt}" loading="lazy">${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`).join('')}
+    <nav class="pager">
+      <a href="#${prev.id}"><span>← Previous</span><b><strong>${prev.co}:</strong> ${prev.title}</b></a>
+      <a class="nx" href="#${next.id}"><span>Next →</span><b><strong>${next.co}:</strong> ${next.title}</b></a>
+    </nav>
+  </div>
+  ${contact}
+  </div>`;
+};
+
+const app = document.getElementById('app');
+let lastHome = true;
+
+function fit(){
+  const s = document.getElementById('stage'); if(!s) return;
+  const m = mode();
+  if(homeMode && homeMode !== m && !CS.some(c => '#'+c.id === location.hash)){ homeMode = null; app.innerHTML = home(); bindDrag(); return fit(); }
+  homeMode = m;
+  const L = LAYOUT[m], k = Math.min(1, (window.innerWidth - 24) / L.W);
+  s.style.width = L.W + 'px'; s.style.height = L.H + 'px';
+  s.style.transform = k<1 ? `scale(${k})` : '';
+  s.style.marginLeft = k<1 ? Math.max(12, (window.innerWidth - L.W*k)/2) + 'px' : 'auto';
+  s.parentElement.style.height = (L.H*k + 56) + 'px';
+  const egg = s.querySelector('.egg'); if(egg){ egg.style.left = L.egg[0]+'px'; egg.style.top = L.egg[1]+'px'; }
+}
+
+function bindDrag(){
+  let top = 10;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage = document.getElementById('stage'), band = stage.parentElement;
+  const scale = () => { const t = stage.style.transform.match(/scale\(([\d.]+)\)/); return t ? +t[1] : 1; };
+  /* the dotted band is the canvas: cards can sit anywhere inside it */
+  const bounds = () => {
+    const k = scale(), s = stage.getBoundingClientRect(), d = band.getBoundingClientRect(), m = 10;
+    return { x0:(d.left-s.left)/k+m, x1:(d.right-s.left)/k-300-m, y0:(d.top-s.top)/k+m, y1:(d.bottom-s.top)/k-248-m };
+  };
+  const soft = (v, lo, hi) => v<lo ? lo-(lo-v)*0.35 : v>hi ? hi+(v-hi)*0.35 : v;
+  document.querySelectorAll('.card').forEach(card=>{
+    const [hx, hy, base] = P()[card.dataset.id];
+    let x=hx, y=hy, tx=hx, ty=hy, vx=0, vy=0, tilt=0, lift=0;
+    let sx, sy, ox, oy, lx, ly, lt, down=false, moved=false, raf=0;
+    const paint = () => { card.style.left = x+'px'; card.style.top = y+'px'; card.style.transform = `rotate(${base+tilt}deg) scale(${1+lift})`; };
+    const loop = () => {
+      const B = bounds();
+      if(down){
+        /* follow the pointer with a slight, smooth lag */
+        const px=x, py=y; x += (tx-x)*0.4; y += (ty-y)*0.4; vx = x-px; vy = y-py;
+      } else {
+        /* glide on release, then ease back inside the canvas edges */
+        x += vx; y += vy; vx *= 0.88; vy *= 0.88;
+        const ex = x<B.x0 ? B.x0-x : x>B.x1 ? B.x1-x : 0, ey = y<B.y0 ? B.y0-y : y>B.y1 ? B.y1-y : 0;
+        if(ex){ vx = vx*0.7 + ex*0.12; } if(ey){ vy = vy*0.7 + ey*0.12; }
+      }
+      tilt += ((down ? Math.max(-4, Math.min(4, vx*0.35)) : 0) - tilt) * 0.15;
+      lift += ((down&&moved ? 0.03 : 0) - lift) * 0.2;
+      paint();
+      const B2 = bounds(), inside = x>=B2.x0-0.5 && x<=B2.x1+0.5 && y>=B2.y0-0.5 && y<=B2.y1+0.5;
+      if(!down && inside && Math.abs(vx)+Math.abs(vy)+Math.abs(tilt)+lift < 0.04){ vx=vy=tilt=lift=0; paint(); raf=0; }
+      else raf = requestAnimationFrame(loop);
+    };
+    const kick = () => { if(!raf) raf = requestAnimationFrame(loop); };
+    card.addEventListener('pointerdown', e=>{
+      if(e.button!==0 || e.pointerType==='touch' || mode()==='m') return;
+      e.preventDefault();
+      down=true; moved=false; sx=e.clientX; sy=e.clientY; ox=x; oy=y; tx=x; ty=y;
+      card.style.zIndex = ++top; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e=>{
+      if(!down) return;
+      const k = scale(), dx=(e.clientX-sx)/k, dy=(e.clientY-sy)/k;
+      if(!moved && Math.hypot(dx,dy)<5) return;
+      moved=true; card.classList.add('drag');
+      const B = bounds(); tx = soft(ox+dx, B.x0, B.x1); ty = soft(oy+dy, B.y0, B.y1);
+      if(calm){ x=Math.max(B.x0,Math.min(B.x1,tx)); y=Math.max(B.y0,Math.min(B.y1,ty)); paint(); } else kick();
+    });
+    const end = ()=>{
+      if(!down) return; down=false; card.classList.remove('drag');
+      if(calm) return;
+      vx *= 0.8; vy *= 0.8; kick();
+    };
+    card.addEventListener('pointerup', end);
+    card.addEventListener('pointercancel', end);
+    card.addEventListener('lostpointercapture', end);
+    card.addEventListener('click', e=>{ if(moved){ e.preventDefault(); moved=false; } });
+  });
+}
+
+function route(){
+  const id = location.hash.slice(1);
+  const c = CS.find(x=>x.id===id);
+  if(c){
+    app.innerHTML = study(c);
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) app.querySelectorAll('video').forEach(v=>{v.autoplay=false;v.pause();v.controls=true;});
+    document.title = `${c.co}: ${c.title} · Amy Brumet`;
+    window.scrollTo({top:0, behavior:'instant'});
+    lastHome = false;
+  } else {
+    const wasHome = lastHome && app.innerHTML;
+    if(!wasHome){ app.innerHTML = home(); bindDrag(); fit(); }
+    document.title = 'Amy Brumet';
+    if(id==='work'){ const w=document.getElementById('work'); requestAnimationFrame(()=>w.scrollIntoView({behavior:'instant'})); }
+    else if(!wasHome) window.scrollTo({top:0, behavior:'instant'});
+    lastHome = true;
+  }
+}
+
+/* lightbox for case study images */
+const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+let lbFrom = null;
+const lbVid = lb.querySelector('video');
+const lbClose = () => { lbVid.pause(); lbVid.removeAttribute('src'); lbVid.load(); lb.classList.remove('open','zoomed'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lbFrom){ lbFrom.focus?.(); lbFrom=null; } };
+app.addEventListener('click', e => {
+  const im = e.target.closest('.hero img, .shot img, .clip img, .clip video'); if(!im) return;
+  lbFrom = im;
+  if(im.tagName==='VIDEO'){ lbImg.hidden=true; lbVid.hidden=false; lb.classList.remove('can-zoom'); lbVid.src = im.currentSrc || im.src; lbVid.setAttribute('aria-label', im.getAttribute('aria-label')||''); lbVid.play().catch(()=>{}); }
+  else { lbVid.hidden=true; lbImg.hidden=false; lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; }
+  lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; lb.querySelector('button').focus();
+});
+lb.addEventListener('click', e => {
+  if(e.target===lbVid) return;
+  if(e.target===lbImg && lb.classList.contains('can-zoom')){ lb.classList.toggle('zoomed'); return; }
+  lb.classList.remove('zoomed'); lbClose();
+});
+lbImg.addEventListener('load', () => { lb.classList.toggle('can-zoom', lbImg.naturalWidth > lbImg.clientWidth * 1.15); });
+document.addEventListener('keydown', e => { if(e.key==='Escape' && lb.classList.contains('open')) lbClose(); });
+window.addEventListener('hashchange', () => { if(lb.classList.contains('open')) lbClose(); });
+
+window.addEventListener('hashchange', route);
+window.addEventListener('resize', fit);
+route();
+}
+</script>
+</body>
+</html>
